@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --config=Scripts/config/webpack.dev.js --watch",
+    "build": "webpack --config webpack.config.js",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "repository": {
     "type": "git",
@@ -17,5 +21,12 @@
   },
   "homepage": "https://github.com/LuuLong6786/Class_Marksheet#readme",
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
 }
