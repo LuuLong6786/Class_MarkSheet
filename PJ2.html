@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form>
+      <h1 style="color: orange">Class Marksheet</h1>
+      <label class="label">Họ tên</label>&nbsp; &nbsp; &nbsp; &nbsp;
+      <input id="name" type="text" width="100%" /><br /><br />
+      <label class="label">Điểm Toán</label>
+      <input id="math" type="text" width="100%" /><br /><br />
+      <label class="label">Điểm Lý</label>&nbsp; &nbsp;
+      <input id="physical" type="text" width="100%" /> <br /><br />
+      <label class="label">Điểm Hóa</label>
+      <input id="chemistry" type="text" width="100%" /><br /><br />
+      <button style="background-color: orange" type="button" onclick="nhap()">
+        Nhập</button
+      ><br /><br />
+    </form>
+
+    <table id="myTable">
+      <tr>
+        <th>STT</th>
+        <th>Họ tên</th>
+        <th>Toán</th>
+        <th>Lý</th>
+        <th>Hóa</th>
+        <th>Trung bình</th>
+      </tr>
+    </table>
+    <br /><br />
+
+    <div id="button">
+      <button type="button" onclick="dtb()">Tính điểm trung bình</button>
+      <button id="btnhsg" type="button" onclick="hsg()">
+        Xác định học sinh giỏi
+      </button>
+      <button id="btnhsk" type="button" onclick="hsk()">
+        Xác định học sinh khá
+      </button>
+      <button type="button" onclick="dlt()">Xóa dòng cuối</button>
+      <button onclick="window.print()">In</button>
+      <button type="button" onclick="sortAsc()">Sắp xếp điểm tăng dần</button>
+      <button type="button" onclick="sortDesc()">Sắp xếp điểm giảm dần</button>
+      <button type="button" onclick="sortDesc()">Sắp xếp điểm giảm dần</button>
+    </div>
+
+    <script text="text/javascript">
+      var i = 0;
+      var testScore = {
+        name: "",
+        math: 0,
+        physical: 0,
+        chemistry: 0,
+        ave: "?",
+      };
+      //Tạo hàm nhap() khi click vào//
+      function nhap() {
+        // Lấy giá trị của input gán vào các biến của testScore//
+        testScore.name = document.getElementById("name").value;
+        testScore.math = document.getElementById("math").value;
+        testScore.physical = document.getElementById("physical").value;
+        testScore.chemistry = document.getElementById("chemistry").value;
+        testScore.ave = "?";
+        //Thêm row và cell
+        var table = document.getElementById("myTable");
+        var row = table.insertRow(-1);
+        var SttNum = row.insertCell();
+        var CellName = row.insertCell();
+        var CellMath = row.insertCell();
+        var CellPhysical = row.insertCell();
+        var CellChemistry = row.insertCell();
+        var CellAve = row.insertCell();
+        // Gán các giá trị vào cell sau mỗi lần thêm dòng//
+        SttNum.innerHTML = i += 1; // Cell STT tự động tăng tiến lên 1 sau mỗi lần click//
+        CellName.innerHTML = testScore.name;
+        CellMath.innerHTML = testScore.math;
+        CellPhysical.innerHTML = testScore.physical;
+        CellChemistry.innerHTML = testScore.chemistry;
+        CellAve.innerHTML = testScore.ave;
+        //trả giá trị trong input về ""/
+        document.getElementById("name").value = "";
+        document.getElementById("math").value = "";
+        document.getElementById("physical").value = "";
+        document.getElementById("chemistry").value = "";
+      }
+      //Tạo hàm tính điểm tb//
+      function dtb() {
+        //vòng lặp lặp theo từng hàng và chọn vị trí cell để lấy giá trị//
+        var table = document.getElementById("myTable");
+        for (var i = 1; i < table.rows.length; i++) {
+          const toan = table.rows[i].cells[2].innerHTML;
+          const ly = table.rows[i].cells[3].innerHTML;
+          const hoa = table.rows[i].cells[4].innerHTML;
+          const diemtb = table.rows[i].cells[5];
+          diemtb.innerHTML = (
+            (parseFloat(toan) + parseFloat(ly) + parseFloat(hoa)) /
+            3
+          ).toFixed(1);
+        }
+      }
+      //Tạo hàm xác định học sinh giỏi//
+      function hsg() {
+        var table = document.getElementById("myTable");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < table.rows.length; i++) {
+          if (parseFloat(table.rows[i].cells.item(5).innerHTML) >= 8) {
+            //Lấy giá trị cell của đtb để so sánh//
+            rows[i].style.backgroundColor = "red";
+          }
+        }
+      }
+      function hsk() {
+        var table = document.getElementById("myTable");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < table.rows.length; i++) {
+          if (
+            parseFloat(table.rows[i].cells.item(5).innerHTML) >= 7 &&
+            parseFloat(table.rows[i].cells.item(5).innerHTML) < 8
+          ) {
+            rows[i].style.backgroundColor = "pink";
+          }
+        }
+      }
+      //Tạo hàm xóa dòng//
+      function dlt() {
+        var table = document.getElementById("myTable");
+        var rows = table.getElementsByTagName("tr");
+        table.deleteRow(rows.length - 1);
+      }
+
+      //Sort DESC
+      function sortDesc() {
+        var table = document.getElementById("myTable");
+        var rows = table.getElementsByTagName("tr");
+        var sttNum = 0;
+        var arrayNode = [];
+        for (var row in rows) {
+          if (rows[row].nodeType == 1) {
+            arrayNode.push(rows[row]);
+          }
+        }
+        arrayNode.sort(function (item1, item2) {
+          let v1 = item1.cells[5].innerText;
+          let v2 = item2.cells[5].innerText;
+
+          return v2 - v1;
+        });
+
+        table.innerHTML = "";
+        for (var i = 0; i < arrayNode.length; i++) {
+          table.innerHTML += arrayNode[i].innerHTML;
+          arrayNode[i + 1].cells[0].innerHTML = sttNum += 1;
+        }
+      }
+
+      //Sort ASC
+      function sortAsc() {
+        var i = 0;
+        var table = document.getElementById("myTable");
+        var rows = table.getElementsByTagName("tr");
+        var sttNum = 0;
+        var arrayNode = [];
+        for (var row in rows) {
+          if (rows[row].nodeType == 1) {
+            arrayNode.push(rows[row]);
+          }
+        }
+        arrayNode.sort(function (item1, item2) {
+          let v1 = item1.cells[5].innerText;
+          let v2 = item2.cells[5].innerText;
+
+          return v1 - v2;
+        });
+
+        table.innerHTML = "";
+        for (var i = 0; i < arrayNode.length; i++) {
+          table.innerHTML += arrayNode[i].innerHTML;
+          arrayNode[i + 1].cells[0].innerHTML = sttNum += 1;
+        }
+      }
+    </script>
+  </body>
+</html>
