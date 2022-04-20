@@ -1,0 +1,21 @@
+{
+  "name": "pj2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuuLong6786/Class_Marksheet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuuLong6786/Class_Marksheet/issues"
+  },
+  "homepage": "https://github.com/LuuLong6786/Class_Marksheet#readme",
+  "keywords": [],
+  "description": ""
+}
